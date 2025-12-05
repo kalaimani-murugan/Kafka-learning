@@ -26,7 +26,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       # Defines the addresses that kafka tells explicitly clients/brokers to connect to
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT'
-      KAFKA_CONTROLLER_LISTENERS_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
 
     volumes:
       - kafka_kraft:/var/lib/kafka/data
