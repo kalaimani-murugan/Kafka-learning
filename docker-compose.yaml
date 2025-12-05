@@ -23,6 +23,7 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
       #KAFKA CLIENTS talk through the port - :9092
       #KAFKA CONTROLLERS talk through the port - 9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT'
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       # Defines the addresses that kafka tells explicitly clients/brokers to connect to
       KAFKA_CONTROLLER_LISTENERS_NAMES: CONTROLLER
