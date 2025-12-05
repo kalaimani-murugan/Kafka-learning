@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  kafka:
+    image: confluentinc/cp-kafka:7.8.3
+    container_name: kafka
+    ports:
+      - "9092:9092"
+
+    environment:
+      KAFKA_KRAFT_MODE : 'true'
+      CLUSTER_ID : 'random-cluster-name'
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller #This config tell kafka that this broker act as both broker
+                                            # and controller to stare and manges data
+      #In KRaft Mode, a broker can act as both broker and controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093 # List of active and backup controllers of the cluster
+      # 1st brokers acts controller
+      KAFKA_OFFSETS_TOPICS_REPLICATION_FACTOR: 1
+      #There is only one copy of metadate that keeps track of which messages each consumer have read.
+      #Kafka knows which messages are read by which consumer from which topic.So that's the metadata.
+      # If it has 3 brokers we can set 3 offsets
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      #KAFKA CLIENTS talk through the port - :9092
+      #KAFKA CONTROLLERS talk through the port - 9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      # Defines the addresses that kafka tells explicitly clients/brokers to connect to
+      KAFKA_CONTROLLER_LISTENERS_NAMES: CONTROLLER
+
+    volumes:
+      - kafka_kraft:/var/lib/kafka/data
+volumes:
+  kafka_kraft:
